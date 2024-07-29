@@ -1,6 +1,7 @@
 import 'bulma/css/bulma.css';
 import './App.scss';
 import { useState } from 'react';
+import classNames from 'classnames';
 
 export const goods = [
   'Dumplings',
@@ -22,8 +23,12 @@ export const App = () => {
     setSelectedGood('');
   };
 
-  const addGoods = el => {
-    setSelectedGood(el);
+  const addGoods = good => {
+    setSelectedGood(good);
+  };
+
+  const checkIfSelected = el => {
+    return el === selectedGood;
   };
 
   return (
@@ -45,11 +50,13 @@ export const App = () => {
           {goods.map(item => (
             <tr
               data-cy="Good"
-              className={`${item === selectedGood ? 'has-background-success-light' : ''}`}
+              className={classNames({
+                'has-background-success-light': checkIfSelected(item),
+              })}
               key={item}
             >
               <td>
-                {item === selectedGood ? (
+                {checkIfSelected(item) ? (
                   <button
                     data-cy="RemoveButton"
                     type="button"
